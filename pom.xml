@@ -3,38 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <parent>
-        <groupId>com.checkpoint.ngm_api_samples</groupId>
-        <artifactId>java_sources</artifactId>
-        <version>private</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
+    <groupId>com.checkpoint.ngm_api_samples</groupId>
     <modelVersion>4.0.0</modelVersion>
     <name>java_sdk</name>
     <packaging>pom</packaging>
     <artifactId>java_sdk</artifactId>
+    <version>private</version>
 
     <modules>
         <module>samples</module>
         <module>mgmt_api_lib</module>
     </modules>
-
-    <properties>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-    </dependencies>
-
-    <build>
-        <plugins>
-        </plugins>
-    </build>
-
 
 </project>
