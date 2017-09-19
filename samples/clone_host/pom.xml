@@ -7,7 +7,6 @@
         <groupId>com.checkpoint.ngm_api_samples</groupId>
         <artifactId>java_examples</artifactId>
         <version>private</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -41,7 +40,6 @@
 
    <build>
        <plugins>
-
            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
@@ -50,64 +48,6 @@
                   <target>1.7</target>
               </configuration>
            </plugin>
-
-           <!-- Arrange the project.build.directory -->
-           <plugin>
-               <artifactId>maven-antrun-plugin</artifactId>
-               <version>1.7</version>
-               <executions>
-                   <execution>
-                       <id>package</id>
-                       <phase>package</phase>
-                       <goals>
-                           <goal>run</goal>
-                       </goals>
-                       <configuration>
-                           <tasks>
-                               <!-- 1. Create the deployment folder -->
-                               <echo>Creating ${target.dirname}</echo>
-                               <mkdir dir="${target.dirname}" />
-
-                               <!-- 2. Copy sources folder into the deployment folder -->
-                               <copy toDir="${target.dirname}/src">
-                                   <fileset dir="${basedir}/src" />
-                               </copy>
-
-                               <!-- 3. Copy README file, if exists -->
-                               <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-                               <if>
-                                   <available file="${basedir}/README.txt"/>
-                                   <then>
-                                       <copy file="${basedir}/README.txt" tofile="${target.dirname}/README.txt" />
-                                   </then>
-                               </if>
-                           </tasks>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-
-           <!-- Copy dependencies into lib folder -->
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-dependency-plugin</artifactId>
-               <version>2.8</version>
-               <executions>
-                   <execution>
-                       <id>copy-dependencies</id>
-                       <phase>package</phase>
-                       <goals>
-                           <goal>copy-dependencies</goal>
-                       </goals>
-                       <configuration>
-                           <outputDirectory>${target.dirname}/lib</outputDirectory>
-                           <!-- Only this dependency is required -->
-                           <includeArtifactIds>json-simple, mgmt_api_library_java</includeArtifactIds>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-
        </plugins>
    </build>
 </project>
