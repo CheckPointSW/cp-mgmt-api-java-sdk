@@ -11,8 +11,8 @@
     <version>private</version>
 
     <modules>
-        <module>samples</module>
         <module>mgmt_api_lib</module>
+        <module>samples</module>
     </modules>
 
 </project>
