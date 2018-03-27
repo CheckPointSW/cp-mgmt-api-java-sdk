@@ -45,7 +45,7 @@ public class ApiClient {
 
     static final String URL_PROTOCOL                    = "https";
     static final String CONTEXT                         = "/web_api/";
-    static final String TRANSPORT_LAYER_SECURITY        = "TLS";
+    static final String TRANSPORT_LAYER_SECURITY        = "TLSv1.2";
     public static final String DEFAULT_FINGERPRINT_FILE = "./fingerprints.txt";
     public static final String LOCAL_SERVER_IP          = "127.0.0.1";
 
