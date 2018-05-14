@@ -16,7 +16,8 @@
     <name>Web API Clone Host</name>
 
     <properties>
-        <target.dirname>${project.build.directory}/${artifactId}</target.dirname>
+        <target.dirname>${project.build.directory}/${project.artifactId}</target.dirname>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Add this in order to cancel the jars creation -->
         <jar.skipIfEmpty>true</jar.skipIfEmpty>
@@ -34,7 +35,7 @@
         <dependency>
             <groupId>com.checkpoint.mgmt_api_library_java</groupId>
             <artifactId>mgmt_api_library_java</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
    </dependencies>
 
@@ -43,6 +44,7 @@
            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
+              <version>2.3.2</version>
               <configuration>
                   <source>1.7</source>
                   <target>1.7</target>
@@ -64,7 +66,7 @@
                        <configuration>
                            <outputDirectory>${target.dirname}/lib</outputDirectory>
                            <!-- Only this dependency is required -->
-                           <includeArtifactIds>json-simple, mgmt_api_library_java</includeArtifactIds>
+                           <includeArtifactIds>json-simple,mgmt_api_library_java</includeArtifactIds>
                        </configuration>
                    </execution>
                </executions>
