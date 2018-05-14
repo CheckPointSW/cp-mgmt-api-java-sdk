@@ -175,7 +175,7 @@ class ApiPortResolver {
         }
 
         Path getPortScript = Paths.get(mdsFwdir, "scripts", API_GET_PORT_SCRIPT);
-        //The script wasn't find
+        //The script wasn't found
         if (!getPortScript.toFile().exists()) {
             return null;
         }

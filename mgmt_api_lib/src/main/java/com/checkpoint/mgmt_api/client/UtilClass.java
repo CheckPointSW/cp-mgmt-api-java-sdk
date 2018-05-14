@@ -195,7 +195,7 @@ public final class UtilClass {
                             ,serverIpAddress,
                             printFingerprint(fingerprint.toUpperCase()));
 
-            String messageIfNotApproved = "First connection to the server and the fingerprint was't approved ";
+            String messageIfNotApproved = "First connection to the server and the fingerprint wasn't approved ";
             return askUserTheQuestion(messageToAsk, messageIfNotApproved);
         }
         // fingerprint file contains server fingerprint and fingerprint from file does't match the fingerprint of server
@@ -207,7 +207,7 @@ public final class UtilClass {
                                     " <api fingerprint>.\n\nSHA1 Fingerprint = {1}\n\n",
                             serverIpAddress,
                             printFingerprint(fingerprint.toUpperCase()));
-                    String messageIfNotApproved = "Fingerprint of server was changed and the new fingerprint was't approved ";
+                    String messageIfNotApproved = "Fingerprint of server was changed and the new fingerprint wasn't approved ";
                     return askUserTheQuestion(messageToAsk, messageIfNotApproved);
         }
         return false;
@@ -266,7 +266,7 @@ public final class UtilClass {
         for (Object fingerprintObject : fingerprintsFromApiFingerprint) {
             JSONObject fingerprintFromApiFingerprint = (JSONObject) fingerprintObject;
             if (!fingerprintFromApiFingerprint.containsKey(FingerprintManager.FINGERPRINT_KEY)) {
-                String message = "Fingerprint was't approved. Parsing 'api fingerprint' response " +
+                String message = "Fingerprint wasn't approved. Parsing 'api fingerprint' response " +
                         "failed, missing key 'fingerprint-sha1'";
                 System.out.println(message);
                 throw new ApiClientException(message);
@@ -278,7 +278,7 @@ public final class UtilClass {
             }
         }
 
-        String message = "Fingerprint was't approved. The fingerprint does not match to the fingerprints from" +
+        String message = "Fingerprint wasn't approved. The fingerprint does not match to the fingerprints from" +
                 " the 'api fingerprint' command";
         System.out.println(message);
         throw new ApiClientException(message);
