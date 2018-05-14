@@ -22,7 +22,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.net.ssl.*;
-import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -373,7 +372,13 @@ public class FingerprintManager
         md.update(der);
 
         byte[] digest = md.digest();
-        return DatatypeConverter.printHexBinary(digest);
+
+        StringBuilder sb = new StringBuilder(digest.length * 2);
+        for (byte b : digest) {
+            sb.append(String.format("%02X", b));
+        }
+
+        return sb.toString();
     }
 
     /**
