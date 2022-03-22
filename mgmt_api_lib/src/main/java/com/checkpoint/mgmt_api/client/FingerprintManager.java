@@ -55,8 +55,8 @@ import static com.checkpoint.mgmt_api.client.ApiClient.*;
 public class FingerprintManager
 {
 
-    private static final String CRYPTOGRAPHIC_HASH = "SHA-1";
-    public static final String FINGERPRINT_KEY = "fingerprint-sha1";
+    private static final String CRYPTOGRAPHIC_HASH = "SHA-256";
+    public static final String FINGERPRINT_KEY = "fingerprint-sha256";
 
     private Path fingerprintFile;
 
@@ -80,12 +80,12 @@ public class FingerprintManager
     }
 
     /**
-     * This function initiates HTTPS connection to the server and extracts the SHA1
+     * This function initiates HTTPS connection to the server and extracts the SHA256
      * fingerprint from the server's certificate.
      * The port set to default value: {@link ApiClient#DEFAULT_PORT}
      *
      * @param server The IP address or name of the Check Point Management Server
-     * @return The SHA1 fingerprint.
+     * @return The SHA256 fingerprint.
      * @throws ApiClientException if an error occurs while connecting to the server.
      */
     public String getServerFingerprint(String server) throws ApiClientException
@@ -94,12 +94,12 @@ public class FingerprintManager
     }
 
     /**
-     * This function initiates HTTPS connection to the server and extracts the SHA1
+     * This function initiates HTTPS connection to the server and extracts the SHA256
      * fingerprint from the server's certificate.
      *
      * @param server The IP address or name of the Check Point Management Server.
      * @param port   The port number on management server
-     * @return The SHA1 fingerprint.
+     * @return The SHA256 fingerprint.
      * @throws ApiClientException if an error occurs while connecting to the server.
      */
     public String getServerFingerprint(String server, int port) throws ApiClientException
@@ -241,7 +241,7 @@ public class FingerprintManager
      * If server's IP address was already stored in the local file its fingerprint is updated.
      *
      * @param server      IP address or name of the Check Point Management Server
-     * @param fingerprint A SHA1 fingerprint of the server's certificate.
+     * @param fingerprint A SHA256 fingerprint of the server's certificate.
      * @param port        The port number on management server
      * @throws ApiClientException if error occurs while reading or writing to the local fingerprint file.
      */
@@ -282,7 +282,7 @@ public class FingerprintManager
      * If server's IP address was already stored in the local file its fingerprint is updated.
      *
      * @param server      IP address or name of the Check Point Management Server
-     * @param fingerprint A SHA1 fingerprint of the server's certificate.
+     * @param fingerprint A SHA256 fingerprint of the server's certificate.
      * @throws ApiClientException if error occurs while reading or writing to the local fingerprint file.
      */
 
@@ -527,18 +527,21 @@ public class FingerprintManager
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
         {
             @Override
+            //sgignore next_line
             public java.security.cert.X509Certificate[] getAcceptedIssuers()
             {
                 return null;
             }
 
             @Override
-            public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
+            public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) throws CertificateException
             {
+                throw new CertificateException();
             }
 
             @Override
-            public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
+            //sgignore next_line
+            public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) throws CertificateException
             {
             }
         }};
@@ -573,6 +576,7 @@ public class FingerprintManager
             connection = (HttpsURLConnection) url.openConnection();
         }
 
+        //sgignore next_line
         connection.setHostnameVerifier(new HostnameVerifier()
         {
             @Override
