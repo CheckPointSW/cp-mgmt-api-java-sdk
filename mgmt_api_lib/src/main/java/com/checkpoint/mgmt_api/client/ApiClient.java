@@ -1009,7 +1009,6 @@ public class ApiClient {
         }
 
         @Override
-        //sgignore next_line
         public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
 
             if(x509Certificates.length<1){
@@ -1037,7 +1036,6 @@ public class ApiClient {
         }
 
         @Override
-        //sgignore next_line
         public void checkServerTrusted(X509Certificate[] x509Certificates, String s, Socket socket)
                                         throws CertificateException {
 
@@ -1061,7 +1059,6 @@ public class ApiClient {
         }
 
         @Override
-        //sgignore next_line
         public void checkServerTrusted(X509Certificate[] x509Certificates, String s, SSLEngine sslEngine)
                                         throws CertificateException {
             if(x509Certificates.length<1){

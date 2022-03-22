@@ -527,7 +527,6 @@ public class FingerprintManager
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
         {
             @Override
-            //sgignore next_line
             public java.security.cert.X509Certificate[] getAcceptedIssuers()
             {
                 return null;
@@ -540,7 +539,6 @@ public class FingerprintManager
             }
 
             @Override
-            //sgignore next_line
             public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) throws CertificateException
             {
             }
@@ -576,7 +574,6 @@ public class FingerprintManager
             connection = (HttpsURLConnection) url.openConnection();
         }
 
-        //sgignore next_line
         connection.setHostnameVerifier(new HostnameVerifier()
         {
             @Override
