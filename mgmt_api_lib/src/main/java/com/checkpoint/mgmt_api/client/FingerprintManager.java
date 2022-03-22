@@ -539,6 +539,7 @@ public class FingerprintManager
             }
 
             @Override
+            //sgignore next_line
             public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) throws CertificateException
             {
             }
@@ -573,7 +574,7 @@ public class FingerprintManager
         else {
             connection = (HttpsURLConnection) url.openConnection();
         }
-
+        //sgignore next_line
         connection.setHostnameVerifier(new HostnameVerifier()
         {
             @Override
