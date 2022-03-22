@@ -138,7 +138,7 @@ public final class UtilClass {
                                         "Check 'api status' for more details.");
         }
 
-        // The API client looks for the server's certificate SHA1 fingerprint in a file.
+        // The API client looks for the server's certificate SHA256 fingerprint in a file.
         String fingerprintFromFile = null;
 
         try {
@@ -191,7 +191,7 @@ public final class UtilClass {
             String messageToAsk = MessageFormat.format(
                     "First connection to the server {0} \n\nTo verify server identity, compare the" +
                             " following fingerprint with the one displayed by the api management tool" +
-                            " <api fingerprint>.\n\nSHA1 Fingerprint = {1}\n\n"
+                            " <api fingerprint>.\n\nSHA256 Fingerprint = {1}\n\n"
                             ,serverIpAddress,
                             printFingerprint(fingerprint.toUpperCase()));
 
@@ -204,7 +204,7 @@ public final class UtilClass {
                     String messageToAsk = MessageFormat.format(
                             "Fingerprint of server {0} was changed.\n\nTo protect server against impersonation, " +
                                     "compare the following fingerprint with the one displayed by the api management tool" +
-                                    " <api fingerprint>.\n\nSHA1 Fingerprint = {1}\n\n",
+                                    " <api fingerprint>.\n\nSHA256 Fingerprint = {1}\n\n",
                             serverIpAddress,
                             printFingerprint(fingerprint.toUpperCase()));
                     String messageIfNotApproved = "Fingerprint of server was changed and the new fingerprint wasn't approved ";
@@ -267,12 +267,12 @@ public final class UtilClass {
             JSONObject fingerprintFromApiFingerprint = (JSONObject) fingerprintObject;
             if (!fingerprintFromApiFingerprint.containsKey(FingerprintManager.FINGERPRINT_KEY)) {
                 String message = "Fingerprint wasn't approved. Parsing 'api fingerprint' response " +
-                        "failed, missing key 'fingerprint-sha1'";
+                        "failed, missing key 'fingerprint-sha256'";
                 System.out.println(message);
                 throw new ApiClientException(message);
             }
-            String sha1 = fingerprintFromApiFingerprint.get(FingerprintManager.FINGERPRINT_KEY).toString();
-            if (sha1.equalsIgnoreCase(fingerprint)) {
+            String sha256 = fingerprintFromApiFingerprint.get(FingerprintManager.FINGERPRINT_KEY).toString();
+            if (sha256.equalsIgnoreCase(fingerprint)) {
                 // Found a match, write the fingerprint to file
                 return;
             }

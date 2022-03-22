@@ -168,8 +168,8 @@ class ApiPortResolver {
             return null;
         }
 
-        Path pythonExec = Paths.get(workingDirPath.toString(), "python");
-        // Python executable was not found at mdsFwdir/Python/bin/python
+        Path pythonExec = Paths.get(workingDirPath.toString(), "python3");
+        // Python executable was not found at mdsFwdir/Python/bin/python3
         if (!pythonExec.toFile().exists()) {
             return null;
         }
