@@ -30,6 +30,7 @@ public final class ApiLoginResponse extends ApiResponse{
 
     //Management server name or IP-address
     final private String serverIpAddress;
+    final private String cloudMgmtId;
 
     //Port of connection
     final private int port;
@@ -38,10 +39,15 @@ public final class ApiLoginResponse extends ApiResponse{
     final private String apiVersion;
 
     public ApiLoginResponse(String serverIP, int statusCode, int port, JSONObject responseBody) {
+        this(serverIP, statusCode, port, responseBody, null);
+    }
+
+    public ApiLoginResponse(String serverIP, int statusCode, int port, JSONObject responseBody, String cloudMgmtId) {
 
         super(statusCode,responseBody);
 
         this.serverIpAddress = serverIP;
+        this.cloudMgmtId = cloudMgmtId;
         this.port            = port;
 
         if (getPayload().containsKey("sid")) {
@@ -92,4 +98,11 @@ public final class ApiLoginResponse extends ApiResponse{
      * @return The version
      */
     public String getApiVersion(){return apiVersion;}
+
+    /**
+     * Gets the Smart-1 Cloud management UID
+     *
+     * @return The Smart-1 Cloud management UID
+     */
+    public String getCloudMgmtId() { return cloudMgmtId; }
 }

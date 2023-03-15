@@ -35,10 +35,12 @@ public class CloneHostExample {
 
         //Management server IP address
         String server = "127.0.0.1";
+        String cloudMgmtId = "aa3ce335-801a-4fc4-ba78-56cd20300d50";
 
         //Login credentials
         String username = "username";
         String password = "password";
+        String apiKey = "api-key";
 
         //The name of the original Host object to be cloned
         String origHost = "originalHost";
@@ -69,9 +71,10 @@ public class CloneHostExample {
         JSONObject loginPayload        = new JSONObject();
         loginPayload.put("user", username);
         loginPayload.put("password",password);
+        loginPayload.put("api-key", apiKey);
 
         try {
-            loginResponse = client.login(server,loginPayload);
+            loginResponse = client.login(server, loginPayload, cloudMgmtId);
         } catch (ApiClientException e) {
             System.out.println(e.getMessage());
                 System.exit(1);

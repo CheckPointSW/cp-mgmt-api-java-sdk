@@ -120,14 +120,47 @@ public class ApiClient {
      * @throws ApiClientException if error occurs while preforming an API call
      */
     public ApiLoginResponse login(String serverIpAddress, String payload) throws ApiClientException {
+        return login(serverIpAddress, payload, null);
+    }
 
+    /**
+     * This function uses the login command to login into the management server.
+     *
+     * @param serverIpAddress The IP address or name of the Check Point Management Server.
+     * @param payload String representing a JSON object containing the login command's arguments.
+     * @param cloudMgmtId The Smart-1 Cloud management UID.
+     *
+     * @return {@link ApiResponse} object
+     *
+     * @throws ApiClientException if error occurs while preforming an API call
+     */
+    public ApiLoginResponse login(String serverIpAddress, String payload, String cloudMgmtId) throws ApiClientException {
         if(serverIpAddress == null || serverIpAddress.isEmpty()){
             throw new ApiClientException("Error: server IP address is invalid");
         }
 
         int port = portResolver.getPort(false);
-        ApiLoginResponse loginResponse = new ApiLoginResponse(serverIpAddress , OK_RESPONSE_CODE, port, new JSONObject());
+        ApiLoginResponse loginResponse = new ApiLoginResponse(serverIpAddress , OK_RESPONSE_CODE, port, new JSONObject(), cloudMgmtId);
         return (ApiLoginResponse) apiCall(loginResponse,"login", payload);
+    }
+
+    /**
+     * This function uses login command to login into the management server.
+     *
+     * @param serverIpAddress The IP address or name of the Check Point Management Server.
+     * @param payload JSON object containing the login command's arguments.
+     * @param cloudMgmtId The Smart-1 Cloud management UID.
+     *
+     * @return {@link ApiResponse} object
+     *
+     * @throws ApiClientException if error occurs while preforming an API call
+     */
+    public ApiLoginResponse login(String serverIpAddress, JSONObject payload, String cloudMgmtId) throws ApiClientException {
+        if(payload == null){
+            throw new ApiClientException("Error: payload is invalid");
+        }
+        String pay = payload.toString();
+        return login(serverIpAddress, pay, cloudMgmtId);
     }
 
     /**
@@ -141,12 +174,7 @@ public class ApiClient {
      * @throws ApiClientException if error occurs while preforming an API call
      */
     public ApiLoginResponse login(String serverIpAddress, JSONObject payload) throws ApiClientException {
-
-        if(payload == null){
-            throw new ApiClientException("Error: payload is invalid");
-        }
-        String pay = payload.toString();
-        return login(serverIpAddress,pay);
+        return login(serverIpAddress,payload,null);
     }
 
     /**
@@ -242,7 +270,12 @@ public class ApiClient {
         try {
             try {
                 // 1)  Establish Connection
-                url = new URL(URL_PROTOCOL, loginResponse.getServerIP(), loginResponse.getPort(), CONTEXT + command);
+                String urlSuffix = "";
+                if(loginResponse.getCloudMgmtId() != null && !loginResponse.getCloudMgmtId().isEmpty()) {
+                    urlSuffix = "/" + loginResponse.getCloudMgmtId() + "/";
+                }
+                urlSuffix += CONTEXT + command;
+                url = new URL(URL_PROTOCOL, loginResponse.getServerIP(), loginResponse.getPort(), urlSuffix);
                 connection = establishConnection(loginResponse, command, url);
             }
             catch (Exception e) {
@@ -269,7 +302,7 @@ public class ApiClient {
                 StringBuilder response = readResponse(input);
                 if (LOGIN_CMD.equals(command)) {
                     res = new ApiLoginResponse(loginResponse.getServerIP(), connection.getResponseCode(),
-                                               loginResponse.getPort(), (JSONObject)UtilClass.convertToJson(response.toString()));
+                                               loginResponse.getPort(), (JSONObject)UtilClass.convertToJson(response.toString()), loginResponse.getCloudMgmtId());
 
                     // 4) When the command is 'login', hiding the password so that it would not appear in the debug file.
                     data = changePasswordInData(data);
