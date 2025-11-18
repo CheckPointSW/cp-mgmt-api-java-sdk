@@ -38,6 +38,7 @@ public class ApiClientArgs {
     private boolean isUserEnteredPort;
     //If set to null the connection won't use proxy tunneling
     private String proxySetting;
+    private String tlsVersion = TRANSPORT_LAYER_SECURITY;
 
     /**
      * Gets the debugFile.
@@ -156,5 +157,18 @@ public class ApiClientArgs {
      */
     public void setProxySetting(String proxySetting){
         this.proxySetting = proxySetting;
+    }
+
+    public String getTlsVersion() {
+        return tlsVersion;
+    }
+
+    public void setTlsVersion(String tlsVersion) {
+        if(tlsVersion==null){
+            this.tlsVersion = TRANSPORT_LAYER_SECURITY;
+        }
+        else {
+            this.tlsVersion = tlsVersion;
+        }
     }
 }

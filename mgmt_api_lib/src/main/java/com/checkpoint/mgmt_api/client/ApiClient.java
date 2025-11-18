@@ -80,6 +80,8 @@ public class ApiClient {
     //Responsible for resolving the port
     private ApiPortResolver portResolver;
 
+    private String tlsVersion = TRANSPORT_LAYER_SECURITY;
+
     /**
      * Constructor.
      */
@@ -102,7 +104,9 @@ public class ApiClient {
         checkFingerprint     = args.isCheckFingerprint();
         proxySettings        = new ApiProxySettingsProcessor(args.getProxySetting());
         portResolver         = new ApiPortResolver(args.getPort(),args.isUserEnteredPort());
-        fingerprintManager   = new FingerprintManager(args.getFingerprintFile(), proxySettings);
+        tlsVersion           = args.getTlsVersion();
+        fingerprintManager   = new FingerprintManager(args.getFingerprintFile(), proxySettings, tlsVersion);
+
 
         if(args.getDebugFile() != null){
             setDebugFile(args.getDebugFile());
@@ -746,7 +750,7 @@ public class ApiClient {
         TrustManager[] trustCerts = new TrustManager[]{new FingerX509TrustManager(loginResponse.getServerIP(), loginResponse.getPort())};
 
         // Install the trustCerts trust manager
-        SSLContext sc = SSLContext.getInstance(TRANSPORT_LAYER_SECURITY);
+        SSLContext sc = SSLContext.getInstance(tlsVersion);
         sc.init(null, trustCerts, new java.security.SecureRandom());
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
