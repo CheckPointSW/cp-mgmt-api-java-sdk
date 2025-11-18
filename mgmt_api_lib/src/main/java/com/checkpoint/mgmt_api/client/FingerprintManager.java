@@ -64,19 +64,22 @@ public class FingerprintManager
 
     //The setting for tunneling through proxy
     private ApiProxySettingsProcessor proxySettings;
+    private String tlsVersion;
 
     /**
      * Constructor
      *
      * @param path          The fingerprint file name.
      * @param proxySettings The proxy setting [user,password,server,port]
+     * @param tlsVersion
      * @throws ApiClientRunTimeException
      */
-    FingerprintManager(String path, ApiProxySettingsProcessor proxySettings) throws ApiClientRunTimeException
+    FingerprintManager(String path, ApiProxySettingsProcessor proxySettings, String tlsVersion) throws ApiClientRunTimeException
     {
 
         setFingerprintFile(path);
         this.proxySettings = proxySettings;
+        this.tlsVersion = tlsVersion;
     }
 
     /**
@@ -546,7 +549,7 @@ public class FingerprintManager
         }};
 
         // Install the all-trusting trust manager
-        SSLContext sc = SSLContext.getInstance(TRANSPORT_LAYER_SECURITY);
+        SSLContext sc = SSLContext.getInstance(tlsVersion);
         sc.init(null, trustAllCerts, new SecureRandom());
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
